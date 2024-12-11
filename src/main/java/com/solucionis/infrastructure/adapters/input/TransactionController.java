@@ -6,10 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/transactions")
+@RequestMapping("/transactions")
 public class TransactionController {
 
     private final TransferService transferService;
@@ -35,25 +36,33 @@ public class TransactionController {
     }
 
     /**
-     * Classe para representar a requisição de transferência.
+     * Endpoint para listar todas as transações.
+     * 
+     * @return Lista de transações existentes.
+     */
+    @GetMapping
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        List<Transaction> transactions = transferService.getAllTransactions();
+        return ResponseEntity.ok(transactions);
+    }
+
+    /**
+     * Classe interna para representar a requisição de transferência.
      */
     public static class TransferRequest {
         private UUID payerId;
         private UUID payeeId;
         private BigDecimal amount;
 
-        // Construtor vazio (necessário para serialização JSON)
         public TransferRequest() {
         }
 
-        // Construtor completo (opcional para facilitar testes e inicializações manuais)
         public TransferRequest(UUID payerId, UUID payeeId, BigDecimal amount) {
             this.payerId = payerId;
             this.payeeId = payeeId;
             this.amount = amount;
         }
 
-        // Getters e Setters
         public UUID getPayerId() {
             return payerId;
         }

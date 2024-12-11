@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/transfers")
+@RequestMapping("/transfers")
 public class TransferController {
 
     private final TransferService transferService;
